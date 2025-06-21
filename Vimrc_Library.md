@@ -33,12 +33,15 @@ brew install vim node llvm git python go
 - `+clipboard`, `+python3` が有効なビルドを推奨
 
 ### Node.js（`coc.nvim` に必須）
+
 #### ✅ 推奨インストール方法（全OS共通）:
-```bash
+
+```
 # nvmでインストール（推奨）
 curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 source ~/.bashrc  # or ~/.zshrc
 nvm install --lts
+```
 
 # ✅ 各OS別パッケージインストール
 
