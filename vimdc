@@ -1,0 +1,106 @@
+" === 基本設定 ===
+set nocompatible
+set encoding=utf-8
+set fileencoding=utf-8
+set number
+set cursorline
+set showmatch
+set tabstop=4
+set shiftwidth=4
+set autoindent
+set smartindent
+set nowrap
+set backspace=indent,eol,start
+set wildmenu
+syntax on
+
+" === ファイルタイプごとの設定を有効にする ===
+filetype plugin indent on
+
+" === 括弧・引用符の自動補完 ===
+inoremap { {}<Left>
+inoremap {<CR> {<CR>}<ESC>O
+inoremap ( ()<Left>
+inoremap (<CR> (<CR>)<ESC>O
+inoremap [ []<Left>
+inoremap ' ''<Left>
+inoremap " ""<Left>
+
+" === 補完を強化（組み込み）===
+set completeopt=menuone,noinsert,noselect
+set shortmess+=c
+
+" === C言語用設定 ===
+autocmd FileType c setlocal cindent
+autocmd FileType c setlocal expandtab tabstop=4 shiftwidth=4
+
+" === Python用設定 ===
+autocmd FileType python setlocal expandtab tabstop=4 shiftwidth=4
+autocmd FileType python setlocal smartindent
+autocmd FileType python setlocal textwidth=88
+
+" === Shell script用設定 ===
+autocmd FileType sh setlocal expandtab tabstop=4 shiftwidth=4
+
+" === スニペット代用として abbreviation ===
+iabbr _sh #!/bin/bash
+iabbr _py #!/usr/bin/env python3
+
+" === 検索強化 ===
+set ignorecase
+set smartcase
+
+" === スクロール時のマージン確保 ===
+set scrolloff=5
+set sidescrolloff=5
+
+" === カラースキーム（任意） ===
+"colorscheme desert
+
+" === クリップボード（GUI Vim や Mac, Linux なら）===
+set clipboard+=unnamedplus
+
+" === 保存時に空白を自動削除 ===
+autocmd BufWritePre * :%s/\s\+$//e
+autocmd FileType * setlocal formatoptions-=cro
+
+" === プラグイン管理 (vim-plug) ===
+call plug#begin('~/.vim/plugged')
+
+" コード補完 (C, Python, Go, Bash すべて対応)
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" スニペット補完（補助）
+Plug 'honza/vim-snippets'
+
+" Python構文強化（任意）
+Plug 'vim-python/python-syntax'
+
+" NERDTree や Git 関連（お好みで）
+Plug 'preservim/nerdtree'
+Plug 'tpope/vim-fugitive'
+
+call plug#end()
+
+" === coc.nvim の基本設定 ===
+" 自動補完ポップアップ
+inoremap <silent><expr> <C-Space> coc#refresh()
+
+" タブで補完候補ナビゲーション
+inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
+
+" Enterで補完を確定
+inoremap <expr> <CR> pumvisible() ? coc#_select_confirm() : "\<CR>"
+
+" ファイルタイプに応じた言語サーバを有効化（自動でインストール可能）
+"autocmd FileType python,c,go,sh :CocInstall -sync coc-pyright coc-clangd coc-go coc-sh | q
+
+" 補完候補にアイコン（オプション）
+let g:coc_global_extensions = ['coc-pyright', 'coc-clangd', 'coc-go', 'coc-sh']
+
+" 保存時に自動フォーマット（必要なら）
+autocmd BufWritePre *.py,*.go,*.c,*.sh silent! :call CocAction('format')
+
+" === Go用のformat-on-save調整（gopls使用前提）===
+let g:go_fmt_command = "goimports"
