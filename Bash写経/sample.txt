@@ -1,0 +1,6 @@
+# file: sample.txt
+apple red 100
+banana yellow 120
+grape purple 200
+orange orange 150
+melon green 180
