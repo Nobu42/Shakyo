@@ -114,4 +114,4 @@ taskset -p 0x1 $$        # シェルをCPU0に制限
 
 ---
 
-📌 必要があれば `taskset` が内部で使う `sched_setaffinity` システムコールについても解説できます！
+
